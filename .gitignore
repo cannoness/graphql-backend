@@ -1,0 +1,11 @@
+lib/
+
+__pycache__
+
+bin/
+
+include/
+
+*.pyc
+
+venv/
