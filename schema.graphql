@@ -17,26 +17,25 @@ type Post {
     created_at: String!
 }
 
-type PostResult {
+type UserResult {
     success: Boolean!
     errors: [String]
-    post: Post
+    user: User
 }
 
-type PostsResult {
+type UsersResult {
     success: Boolean!
     errors: [String]
-    posts: [Post]
+    users: [User]
 }
 
 type Query {
-    listPosts: PostsResult!
-    getPost(id: ID!): PostResult!
+    listUsers: UsersResult!
     getUser(id: ID!): User!
 }
 
 type Mutation {
-    createPost(title: String!, description: String!, created_at: String): PostResult!
-    updatePost(id: ID!, title: String, description: String): PostResult!
-    deletePost(id: ID): PostResult!
+    createUser(username: String!): UserResult!
+    updateUser(id: ID!, username: String): UserResult!
+    deleteUser(id: ID): UserResult!
 }

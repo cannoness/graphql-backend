@@ -3,21 +3,21 @@ from datetime import date
 from ariadne import convert_kwargs_to_snake_case
 
 from api import db
-from api.models import Post
+from api.models import User
 
 
 @convert_kwargs_to_snake_case
-def create_post_resolver(obj, info, title, description):
+def create_user_resolver(obj, info, username):
     try:
         today = date.today()
-        post = Post(
-            title=title, description=description, created_at=today.strftime("%b-%d-%Y")
+        user = User(
+            username=username, created_at=today.strftime("%b-%d-%Y")
         )
-        db.session.add(post)
+        db.session.add(user)
         db.session.commit()
         payload = {
             "success": True,
-            "post": post.to_dict()
+            "user": user.to_dict()
         }
     except ValueError:  # date format errors
         payload = {
@@ -30,35 +30,36 @@ def create_post_resolver(obj, info, title, description):
 
 
 @convert_kwargs_to_snake_case
-def update_post_resolver(obj, info, id, title, description):
+def update_user_resolver(obj, info, user_id, username):
     try:
-        post = Post.query.get(id)
-        if post:
-            post.title = title
-            post.description = description
-        db.session.add(post)
+        user = User.query.get(user_id)
+        today = date.today()
+        if user:
+            user.username = username
+            user.last_updated = today.strftime("%b-%d-%Y")
+        db.session.add(user)
         db.session.commit()
         payload = {
             "success": True,
-            "post": post.to_dict()
+            "post": user.to_dict()
         }
 
     except AttributeError:  # todo not found
         payload = {
             "success": False,
-            "errors": ["item matching id {id} not found"]
+            "errors": [f"item matching id {user_id} not found"]
         }
 
     return payload
 
 
 @convert_kwargs_to_snake_case
-def delete_post_resolver(obj, info, id):
+def delete_user_resolver(obj, info, user_id):
     try:
-        post = Post.query.get(id)
-        db.session.delete(post)
+        user = User.query.get(user_id)
+        db.session.delete(user)
         db.session.commit()
-        payload = {"success": True, "post": post.to_dict()}
+        payload = {"success": True, "user": user.to_dict()}
 
     except AttributeError:
         payload = {
