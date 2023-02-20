@@ -1,0 +1,13 @@
+Flask>=0.12
+Flask-Admin>=1.5.1
+Flask-Dance>=0.14.0
+Flask-GraphQL>=1.4.1
+Flask-Login>=0.4.1
+Flask-SQLAlchemy>=2.3.2
+graphene-sqlalchemy>=2.0.0
+SQLAlchemy-Utils>=0.33.3
+sqlalchemy<2.0.0
+graphene~=2.1.9
+
+ariadne~=0.17.1
+oauthlib~=3.2.2

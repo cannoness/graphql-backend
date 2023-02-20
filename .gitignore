@@ -1,11 +1,4 @@
-lib/
-
-__pycache__
-
-bin/
-
-include/
-
 *.pyc
-
-venv/
+.env
+venv
+.idea

@@ -1,8 +1,8 @@
-from .models import Post
+from .models import Post, User
 from ariadne import convert_kwargs_to_snake_case
 
 
-def listPosts_resolver(obj, info):
+def list_posts_resolver(obj, info):
     try:
         posts = [post.to_dict() for post in Post.query.all()]
         print(posts)
@@ -17,8 +17,25 @@ def listPosts_resolver(obj, info):
         }
     return payload
 
+
+def get_user_resolver(id):
+    try:
+        posts = [post.to_dict() for post in User.query.all()]
+        print(posts)
+        payload = {
+            "success": True,
+            "posts": posts
+        }
+    except Exception as error:
+        payload = {
+            "success": False,
+            "errors": [str(error)]
+        }
+    return payload
+
+
 @convert_kwargs_to_snake_case
-def getPost_resolver(obj, info, id):
+def get_post_resolver(obj, info, id):
     try:
         post = Post.query.get(id)
         payload = {

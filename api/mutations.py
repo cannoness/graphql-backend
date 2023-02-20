@@ -28,6 +28,7 @@ def create_post_resolver(obj, info, title, description):
 
     return payload
 
+
 @convert_kwargs_to_snake_case
 def update_post_resolver(obj, info, id, title, description):
     try:
@@ -49,6 +50,7 @@ def update_post_resolver(obj, info, id, title, description):
         }
 
     return payload
+
 
 @convert_kwargs_to_snake_case
 def delete_post_resolver(obj, info, id):

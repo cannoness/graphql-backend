@@ -3,6 +3,13 @@ schema {
     mutation: Mutation
 }
 
+type User {
+    id: ID!
+    username: String!
+    created_at: String!
+    last_login: String!
+}
+
 type Post {
     id: ID!
     title: String!
@@ -25,6 +32,7 @@ type PostsResult {
 type Query {
     listPosts: PostsResult!
     getPost(id: ID!): PostResult!
+    getUser(id: ID!): User!
 }
 
 type Mutation {
