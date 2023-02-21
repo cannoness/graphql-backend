@@ -8,6 +8,8 @@ type User {
     username: String!
     created_at: String!
     last_login: String!
+    email: String!
+    profile_pic: String!
 }
 
 type Post {
@@ -35,7 +37,7 @@ type Query {
 }
 
 type Mutation {
-    createUser(username: String!): UserResult!
-    updateUser(id: ID!, username: String): UserResult!
+    createUser(id: ID!, username: String!, email: String, profile_pic: String): UserResult!
+    updateUser(id: ID!, username: String, email: String, profile_pic: String): UserResult!
     deleteUser(id: ID): UserResult!
 }

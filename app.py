@@ -80,11 +80,11 @@ def load_user(user_id):
 def index():
     if current_user.is_authenticated:
         return (
-            "<p>Hello, {}! You're logged in! Email:</p>"
+            "<p>Hello, {}! You're logged in! Email: {}</p>"
             "<div><p>Google Profile Picture:</p>"
-            '<img src="" alt="Google profile pic"></img></div>'
+            '<img src="{}" alt="Google profile pic"></img></div>'
             '<a class="button" href="/logout">Logout</a>'.format(
-                current_user.username # current_user.email, current_user.profile_pic
+                current_user.username, current_user.email, current_user.profile_pic
             )
         )
     else:
@@ -150,12 +150,12 @@ def callback():
     # Create a user in your db with the information provided
     # by Google
     user = api.queries.User(
-        id=unique_id, username=users_name  # , email=users_email, profile_pic=picture
+        id=unique_id, username=users_name, email=users_email, profile_pic=picture
     )
 
     # Doesn't exist? Add it to the database.
     if not api.queries.User.query.get(unique_id):
-        api.mutations.create_user_resolver(None, None, unique_id=unique_id, username=users_name)  # , users_email, picture)
+        api.mutations.create_user_resolver(None, None, unique_id, users_name, users_email, picture)
 
     # Begin user session by logging the user in
     login_user(user, force=True, remember=True)

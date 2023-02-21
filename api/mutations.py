@@ -7,13 +7,13 @@ from api.models import User
 
 
 @convert_kwargs_to_snake_case
-def create_user_resolver(obj, info, unique_id, username):
+def create_user_resolver(obj, info, unique_id, username, email, profile_pic):
     try:
         today = date.today()
         user = User(
             id=unique_id,
             username=username, created_at=today.strftime("%b-%d-%Y"),
-            last_updated=today.strftime("%b-%d-%Y"), is_active=True, is_authenticated=True
+            last_updated=today.strftime("%b-%d-%Y"), email=email, profile_pic=profile_pic
         )
         db.session.add(user)
         db.session.commit()
@@ -32,18 +32,20 @@ def create_user_resolver(obj, info, unique_id, username):
 
 
 @convert_kwargs_to_snake_case
-def update_user_resolver(obj, info, user_id, username):
+def update_user_resolver(obj, info, user_id, username, email, picture):
     try:
         user = User.query.get(user_id)
         today = date.today()
         if user:
             user.username = username
+            user.email = email
+            user.profile_pic = picture
             user.last_updated = today.strftime("%b-%d-%Y")
         db.session.add(user)
         db.session.commit()
         payload = {
             "success": True,
-            "post": user.to_dict()
+            "user": user.to_dict()
         }
 
     except AttributeError:  # todo not found
