@@ -7,11 +7,13 @@ from api.models import User
 
 
 @convert_kwargs_to_snake_case
-def create_user_resolver(obj, info, username):
+def create_user_resolver(obj, info, unique_id, username):
     try:
         today = date.today()
         user = User(
-            username=username, created_at=today.strftime("%b-%d-%Y")
+            id=unique_id,
+            username=username, created_at=today.strftime("%b-%d-%Y"),
+            last_updated=today.strftime("%b-%d-%Y"), is_active=True, is_authenticated=True
         )
         db.session.add(user)
         db.session.commit()

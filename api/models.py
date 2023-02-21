@@ -21,11 +21,18 @@ class User(db.Model):
     username = db.Column(db.String)
     created_at = db.Column(db.Date)
     last_updated = db.Column(db.Date)
+    is_active = db.Column(db.Boolean)
+    is_authenticated = db.Column(db.Boolean)
 
     def to_dict(self):
         return {
             "id": self.id,
             "username": self.username,
             "created_at": str(self.created_at.strftime('%d-%m-%Y')),
-            "last_updated": str(self.last_updated.strftime('%d-%m-%Y'))
+            "last_updated": str(self.last_updated.strftime('%d-%m-%Y')),
+            "is_active": self.is_active,
+            "is_authenticated": self.is_authenticated
         }
+
+    def get_id(self):
+        return self.id
